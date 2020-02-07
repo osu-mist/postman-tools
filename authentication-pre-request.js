@@ -4,7 +4,9 @@ const oauth2Request = {
     url: 'https://api.oregonstate.edu/oauth2/token',
     method: 'POST',
     header: 'Content-Type:application/x-www-form-urlencoded',
-    body:'grant_type=client_credentials&scope=&client_id=' + pm.collectionVariables.get('clientID') + '&client_secret=' + pm.collectionVariables.get('clientSecret')
+    body:`grant_type=client_credentials&scope=
+      &client_id=${pm.collectionVariables.get('clientID')}
+      &client_secret=${pm.collectionVariables.get('clientSecret')}`
 };
 
 if (pm.environment.name === "LOCAL") {
