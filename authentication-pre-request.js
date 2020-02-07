@@ -16,7 +16,8 @@ if (pm.environment.name === "LOCAL") {
 } else if (pm.collectionVariables.get('bearerToken')
             && pm.collectionVariables.get('tokenExpirationDate')
             && pm.collectionVariables.get('tokenExpirationDate') > new Date().getTime()) {
-    pm.request.headers.add(new Header("Authorization: Bearer " + pm.collectionVariables.get('bearerToken')));
+    pm.request.headers.add(
+      new Header(`Authorization: Bearer ${pm.collectionVariables.get('bearerToken')}`));
 } else {
     console.log("Getting new bearer token");
     pm.sendRequest(oauth2Request, function (err, res) {
@@ -26,7 +27,8 @@ if (pm.environment.name === "LOCAL") {
             currDate.setSeconds(currDate.getSeconds() + parseInt(response.expires_in));
             pm.collectionVariables.set('bearerToken', response.access_token);
             pm.collectionVariables.set('tokenExpirationDate', currDate.getTime());
-            pm.request.headers.add(new Header("Authorization: Bearer " + pm.collectionVariables.get('bearerToken')));
+            pm.request.headers.add(
+              new Header(`Authorization: Bearer ${pm.collectionVariables.get('bearerToken')}`));
         } else {
             console.log("Could not retrieve oauth2 token");
             console.log(err);
