@@ -10,7 +10,8 @@ const oauth2Request = {
 };
 
 if (pm.environment.name === "LOCAL") {
-    const token = btoa(pm.collectionVariables.get('username') + ":" + pm.collectionVariables.get('password'));
+    const token = btoa(
+      `${pm.collectionVariables.get('username')}:${pm.collectionVariables.get('password')}`);
     pm.request.headers.add(new Header("Authorization: Basic " + token));
 } else if (pm.collectionVariables.get('bearerToken')
             && pm.collectionVariables.get('tokenExpirationDate')
