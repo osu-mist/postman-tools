@@ -1,4 +1,4 @@
-var Header = require('postman-collection').Header
+var { Header } = require('postman-collection')
 
 const oauth2Request = {
     url: 'https://api.oregonstate.edu/oauth2/token',
