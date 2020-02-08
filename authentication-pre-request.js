@@ -21,7 +21,7 @@ if (pm.environment.name === "LOCAL") {
 } else {
     console.log("Getting new bearer token");
     pm.sendRequest(oauth2Request, function (err, res) {
-        if (!err) {
+        if (!err && res.code === 200) {
             const response = res.json();
             const currDate = new Date();
             currDate.setSeconds(currDate.getSeconds() + parseInt(response.expires_in));
@@ -31,8 +31,8 @@ if (pm.environment.name === "LOCAL") {
               new Header(`Authorization: Bearer ${pm.collectionVariables.get('bearerToken')}`));
         } else {
             console.log("Could not retrieve oauth2 token");
-            console.log(err);
-            throw Error;
+            if (err) console.log(err);
+            throw new Error(`${res.code}: ${res.status}`);
         }
     });
 }
