@@ -14,7 +14,7 @@ Settings and code to make the most of Postman.
 5. Edit the collection and add the following variables. Note the names matter here since they are referenced in the script
     - bearerToken (Can be left blank)
     - tokenExpirationDate (Can be left blank)
-    - clientID (oauth2 client ID)
+    - clientId (oauth2 client Id)
     - clientSecret (oauth2 client secret)
     - username (basic auth username)
     - password (basic auth password)
