@@ -1,4 +1,5 @@
 const { Header } = require('postman-collection');
+const { stringify } = require('querystring');
 
 const {
   collectionVariables,
@@ -14,9 +15,11 @@ const oauth2Request = {
   url: 'https://api.oregonstate.edu/oauth2/token',
   method: 'POST',
   header: 'Content-Type:application/x-www-form-urlencoded',
-  body: `grant_type=client_credentials&scope=
-      &client_id=${collectionVariables.get('clientId')}
-      &client_secret=${collectionVariables.get('clientSecret')}`
+  body: stringify({
+    grant_type: 'client_credentials',
+    client_id: collectionVariables.get('clientId'),
+    client_secret: collectionVariables.get('clientSecret'),
+  }),
 };
 
 if (environmentName === 'LOCAL') {
