@@ -22,7 +22,7 @@ if (pm.environment.name === "LOCAL") {
       new Header(`Authorization: Bearer ${pm.collectionVariables.get('bearerToken')}`));
 } else {
     console.log("Getting new bearer token");
-    pm.sendRequest(oauth2Request, function (err, res) {
+    pm.sendRequest(oauth2Request, (err, res) => {
         if (!err && res.code === 200) {
             const response = res.json();
             const currDate = new Date();
