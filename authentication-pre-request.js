@@ -1,9 +1,14 @@
 const { Header } = require('postman-collection');
 
-const { collectionVariables, request: { headers } } = pm;
+const {
+  collectionVariables,
+  request: { headers },
+  environment: { name: environmentName },
+} = pm;
 const bearerToken = collectionVariables.get('bearerToken');
 const tokenExpirationDate = collectionVariables.get('tokenExpirationDate');
-const { environment: environmentName } = pm.environment.name;
+const username = collectionVariables.get('username');
+const password = collectionVariables.get('password');
 
 const oauth2Request = {
   url: 'https://api.oregonstate.edu/oauth2/token',
@@ -16,7 +21,7 @@ const oauth2Request = {
 
 if (environmentName === 'LOCAL') {
   const token = btoa(
-    `${collectionVariables.get('username')}:${collectionVariables.get('password')}`);
+    `${username}:${password}`);
   headers.add(new Header(`Authorization: Basic ${token}`));
 } else if (bearerToken && tokenExpirationDate && tokenExpirationDate > new Date().getTime()) {
   headers.add(new Header(`Authorization: Bearer ${bearerToken}`));
