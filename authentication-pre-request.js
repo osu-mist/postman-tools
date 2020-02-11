@@ -11,28 +11,28 @@ const oauth2Request = {
       &client_secret=${collectionVariables.get('clientSecret')}`
 };
 
-if (pm.environment.name === "LOCAL") {
+const bearerToken = collectionVariables.get('bearerToken');
+const tokenExpirationDate = collectionVariables.get('tokenExpirationDate');
+if (pm.environment.name === 'LOCAL') {
     const token = btoa(
-      `${pm.collectionVariables.get('username')}:${pm.collectionVariables.get('password')}`);
-    pm.request.headers.add(new Header("Authorization: Basic " + token));
-} else if (pm.collectionVariables.get('bearerToken')
-            && pm.collectionVariables.get('tokenExpirationDate')
-            && pm.collectionVariables.get('tokenExpirationDate') > new Date().getTime()) {
-    pm.request.headers.add(
-      new Header(`Authorization: Bearer ${pm.collectionVariables.get('bearerToken')}`));
+      `${collectionVariables.get('username')}:${collectionVariables.get('password')}`);
+    pm.request.headers.add(new Header(`Authorization: Basic ${token}`));
+} else if (bearerToken && tokenExpirationDate && tokenExpirationDate > new Date().getTime()) {
+    pm.request.headers.add(new Header(`Authorization: Bearer ${bearerToken}`));
 } else {
     console.log("Getting new bearer token");
     pm.sendRequest(oauth2Request, (err, res) => {
         if (!err && res.code === 200) {
             const response = res.json();
+            const newToken = response.access_token;
             const currDate = new Date();
             currDate.setSeconds(currDate.getSeconds() + parseInt(response.expires_in));
-            pm.collectionVariables.set('bearerToken', response.access_token);
-            pm.collectionVariables.set('tokenExpirationDate', currDate.getTime());
+            collectionVariables.set('bearerToken', newToken);
+            collectionVariables.set('tokenExpirationDate', currDate.getTime());
             pm.request.headers.add(
-              new Header(`Authorization: Bearer ${pm.collectionVariables.get('bearerToken')}`));
+              new Header(`Authorization: Bearer ${newToken}`));
         } else {
-            console.log("Could not retrieve oauth2 token");
+            console.log('Could not retrieve oauth2 token');
             if (err) console.log(err);
             throw new Error(`${res.code}: ${res.status}`);
         }
