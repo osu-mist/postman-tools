@@ -27,3 +27,14 @@ Settings and code to make the most of Postman.
 7. Make sure 'Authorization' for all of your requests are set to 'No Auth'. The pre-request script will handle this setting. The easiest way to do this is to set the top level collection to 'No Auth' and leave all others at their default value of 'Inherit auth from parent'.
 ![authorization example](images/authorization-example.png)
 8. Make a request! Check the Postman console if errors occur.
+
+## Handling Versions
+There are multiple ways to handle version numbers in postman but using global variables looks to be the simplest.
+You can access global variables by clicking the 'eye' symbol in the top right of the postman window.
+![global variables button](images/global-variables-button.png)
+Click the `Edit` link in the `Globals` section and add a `version` variable.
+Then add the `version` variable in place of the version number.
+![version url example](images/url-version-example.png)
+You can edit the version number on the fly by hitting the `eye` button again and hovering over the `Current Value` which will show an edit symbol.
+![version editing](images/version-editing.png)
+
