@@ -2,16 +2,19 @@
 Settings and code to make the most of Postman.
 
 ## Auto-Authentication Setup
-1. Create all the environments you need
-    - These can be named anything except for 'LOCAL' which is referenced in the pre-request script
+1. Create all the environments you need. These can be named anything you see fit
 ![Open environment settings](images/open-env-settings.png)
-2. These environments only need one variable 'URL'
+2. These environments only need two variables
+    - URL
+    - authType (must be one of the following):
+        - bearer
+        - basic
 ![Local environment example](images/local-env.png)
 3. Add the 'URL' variable to the url of all your requests
 ![URL example](images/url-example.png)
 4. Create a top level collection to hold all of the APIs you want to use auto-authentication
 ![Collection example](images/collection-example.png)
-5. Edit the collection and add the following variables. Note the names matter here since they are referenced in the script
+5. Edit the collection and add the following variables in the `Variables` tab. Note the names matter here since they are referenced in the script. Also make sure that the `Current Value` column is filled in since this is what the script uses.
     - bearerToken (Can be left blank)
     - tokenExpirationDate (Can be left blank)
     - clientId (oauth2 client Id)
